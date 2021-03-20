@@ -1,16 +1,18 @@
-commit 353794feb596d95e3f8893e39b174c5a89d1013e
-Author: Arthur Gautier <baloo@superbaloo.net>
-Date:   Wed Feb 17 02:27:40 2021 +0000
+From e54812876c45da5931beb254eec100815ed66f37 Mon Sep 17 00:00:00 2001
+From: Piotr Dobrowolski <admin@tastycode.pl>
+Date: Fri, 19 Mar 2021 23:44:17 +0100
+Subject: [PATCH] fix localstatedir and python-install
 
-    python-install
-    
-    Signed-off-by: Arthur Gautier <baloo@superbaloo.net>
+---
+ samples/Makefile.am         | 20 ++------------------
+ src/swtpm_setup/Makefile.am | 14 ++------------
+ 2 files changed, 4 insertions(+), 30 deletions(-)
 
 diff --git a/samples/Makefile.am b/samples/Makefile.am
-index 7d69bf8..1803bb9 100644
+index 7d69bf8..80bec83 100644
 --- a/samples/Makefile.am
 +++ b/samples/Makefile.am
-@@ -39,19 +39,9 @@ python-uninstall:
+@@ -39,28 +39,12 @@ python-uninstall:
  	$(PIP3) uninstall -y $(PY_PACKAGE_NAME)
  
  if PYTHON_INSTALLATION
@@ -31,7 +33,16 @@ index 7d69bf8..1803bb9 100644
 +uninstall-local: python-uninstall
  endif
  
+-
+ install-data-local:
+-	$(MKDIR_P) $(DESTDIR)$(localstatedir)/lib/swtpm-localca
+-	if test -z $(DESTDIR); then \
+-		chown -R @TSS_USER@:root $(DESTDIR)$(localstatedir)/lib/swtpm-localca || true; \
+-		chmod 0750 $(DESTDIR)$(localstatedir)/lib/swtpm-localca || true; \
+-	fi
  
+ # for out-of-tree builds we need to clean up
+ clean-local:
 diff --git a/src/swtpm_setup/Makefile.am b/src/swtpm_setup/Makefile.am
 index 529eefe..533b1b3 100644
 --- a/src/swtpm_setup/Makefile.am
@@ -58,3 +69,6 @@ index 529eefe..533b1b3 100644
  endif
  
  # for out-of-tree builds we need to clean up
+-- 
+2.29.2
+

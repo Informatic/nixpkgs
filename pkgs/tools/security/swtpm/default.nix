@@ -56,11 +56,12 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--with-cuse"
+    "--localstatedir=/var"
   ];
 
   postInstall = ''
     wrapPythonProgramsIn $out/bin "$out $pythonPath"
-    wrapPythonProgramsIn $out/share/swtpm "$out $pythonPath"
+    wrapPythonProgramsIn $out/share/swtpm "$out $pythonPath ${gnutls}"
   '';
 
   enableParallelBuilding = true;
